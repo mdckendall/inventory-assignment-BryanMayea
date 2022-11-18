@@ -13,7 +13,19 @@ class Inventory {
   }
 
   public String toString() {
-    return "Name: " + name + "  Serial Number: " + serialNumber + "  Value: $" + value;
+    return name + "," + serialNumber + "," + value;
+  }
+
+  public String serialNumber() {
+    return serialNumber;
+  }
+
+  public String name() {
+    return name;
+  }
+
+  public int value() {
+    return value;
   }
 
 }
@@ -47,7 +59,7 @@ class Main {
           
           String serialNumber = input.nextLine();
           
-          System.out.println("Enter the value in USD. (Make sure they are in whole numbers) ");
+          System.out.println("Enter the value in USD. (whole number) ");
           
           int value = input.nextInt();
           
@@ -57,46 +69,51 @@ class Main {
         }
         case 2: {
           
-          System.out.println("Which item would you like to delete: ");
-          
-          int index = input.nextInt();
-          
-          if(index-1 < 0 || index-1 >= inventory.size()) {
-            System.out.println("Item " + index + " does not exist.");  
-            break;
-          }
+          System.out.println("Enter the serial number of the item to delete: ");
+          input.nextLine();
 
-          inventory.remove(index-1);
-          System.out.println("Item " + index + " deleted!");
+          String serialNumber = input.nextLine();
+
+          for(int i = 0; i < inventory.size(); i++){
+            Inventory inv = inventory.get(i);
+            if (serialNumber.equals(inv.serialNumber())){
+              inventory.remove(i);
+              
+            }
+            
+            }
           
           break;
         }
         case 3: {
-          
-          System.out.println("What item would you like to update: ");
-          
-          int index = input.nextInt();
-          
-          if(index-1 < 0 || index-1 >= inventory.size()) {
-          System.out.println("Item does not exist. ");  
-            break;
-          }
-          
-          System.out.println("Enter the name: ");
 
           input.nextLine();
           
-          String name = input.nextLine();
-          
-          System.out.println("Enter the Serial Number: ");
+          System.out.println("Enter the serial number of the item to change: ");
           
           String serialNumber = input.nextLine();
+
+          for(int i = 0; i < inventory.size(); i++) {
+            Inventory inv = inventory.get(i);
+
+            if (serialNumber.equals(inv.serialNumber())){
+
+              System.out.println("Enter the new name: ");
+
+              String name = input.nextLine();
+
+              System.out.println("Enter the new value in dollars (whole number): ");
+
+              int value = input.nextInt();
+
+              inventory.set(i, new Inventory (name, serialNumber, value));
+              
+            }
+            
+
+          }
           
-          System.out.println("Enter the value in USD. (Make sure they are in whole numbers) ");
-          
-          int value = input.nextInt();
-          
-          inventory.set(index-1, new Inventory(name, serialNumber, value));
+          // inventory.set(index-1, new Inventory(name, serialNumber, value));
           
           break;
         }
@@ -104,14 +121,12 @@ class Main {
           
           for(int i = 0; i < inventory.size(); i++) {
             Inventory inv = inventory.get(i);
-            System.out.println(i+1 + ": " + inv.toString());
+            System.out.println(inv.toString());
           }
           
           break;
         }
         case 5:
-          
-          System.out.println("Thanks for using my Inventory System! Goodbye!");
           
           optionCheck = false;
           
